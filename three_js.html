@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAGP Three JS</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body style="margin:0">
+    <script>
+
+        var scene = new THREE.Scene();
+        var clock = new THREE.Clock();
+        var renderer = new THREE.WebGLRenderer();
+        var box, cylinder;
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            box.rotation.x += 0.015;
+            box.rotation.y += 0.015;
+            var time = clock.getElapsedTime();
+            var zPosition = Math.sin(time) * 10;
+            cylinder.position.z = zPosition;
+            renderer.render(scene, camera);
+        }
+
+        function createPlane() {
+            var planeGeometry = new THREE.PlaneGeometry(2,2);
+            var planeMaterial = new THREE.MeshBasicMaterial({ color: 0x009fa0, side: THREE.DoubleSide });
+            var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+            plane.position.set(3, 0.5, 0);
+            scene.add(plane);
+        }
+
+        function createBox() {
+            var boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+            var boxMaterial = new THREE.MeshNormalMaterial();
+            box = new THREE.Mesh(boxGeometry, boxMaterial);
+            box.position.set(-5, 0.5, 0); 
+            scene.add(box);
+        }
+
+        function createCone() {
+            var coneGeometry = new THREE.ConeGeometry(1, 5, 32);
+            var coneMaterial = new THREE.MeshPhongMaterial({ color: 0x778855 });
+            var cone = new THREE.Mesh(coneGeometry, coneMaterial);
+            cone.position.set(-2, 0.5, 0); 
+            scene.add(cone);
+        }
+
+        function createCylinder() {
+            var cylinderGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 10);
+            var cylinderMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+            cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+            cylinder.position.set(-1, 2, 5); 
+            scene.add(cylinder);
+        }
+
+        function createSphere() {
+            var sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+            var sphereMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff });
+            var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            sphere.position.set(0, 0, 0); // Position sphere at centre
+            scene.add(sphere);
+        }
+
+        function createScene() {
+        
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            createPlane();
+            createBox();
+            createCone();
+            createCylinder();
+            createSphere();
+            var ambientLight = new THREE.AmbientLight(0xffffff, 2);
+            scene.add(ambientLight);
+            camera.position.z = 5;
+            renderer.render(scene, camera);
+            animate();
+
+        }
+        createScene();
+
+    </script>
+</body>
+</html>

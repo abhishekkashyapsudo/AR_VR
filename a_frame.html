@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Reality Environment</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="./js/play-on-click.js"></script>
+    <script src="./js/hide-on-play.js"></script>
+    <script src="./js/cursor-listener.js"></script>
+
+</head>
+
+<body>
+    <a-scene>
+        <a-box color="#0000FF" width="1" height="1" depth="1" position="6 2 -5" scale="1 1 1"
+            cursor-listener>
+        </a-box>
+        <a-assets>
+            <video id="bunny-video" preload="auto" src="https://cdn.aframe.io/videos/bunny.mp4" width="160" height="140"
+                autoplay loop="false" crossorigin="anonymous"></video>
+        </a-assets>
+        <a-sky color="#87CEEB" src="images/clouds-4k.jpg"></a-sky>
+        <a-entity position="0 0 -5">
+            <a-entity gltf-model="url(house/scene.gltf)" scale="0.5 0.5 0"></a-entity>
+        </a-entity>
+
+        <a-entity id="vid1" material="shader: flat; src: #bunny-video"
+            geometry="primitive: plane; width:160; height: 140;" position="-60 -40 -200" rotation="0 10 0" play-on-click
+            visible="false"></a-entity>
+
+        <a-camera>
+            <a-entity id="video-starter"
+                text="align: center; width:10; wrapCount:100; color:black;value: Click to start the video"
+                position="-1 0 -1.5" hide-on-play="#bunny-video"></a-entity>
+
+        </a-camera>
+    </a-scene>
+</body>
+
+</html>
